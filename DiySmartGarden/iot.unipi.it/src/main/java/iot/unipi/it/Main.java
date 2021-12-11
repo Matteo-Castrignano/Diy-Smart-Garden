@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.LogManager;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -13,7 +14,6 @@ public class Main {
 	private static Scanner input;
 
 	private static void setRequirements() {
-		//input = new Scanner(System.in);
 
 		do {
 			try {
@@ -81,13 +81,12 @@ public class Main {
 	public static void main(String[] args) throws IOException, ParseException, MqttException {
 
 		input = new Scanner(System.in);
-		
+		LogManager.getLogManager().reset();
 		setRequirements();
 
 		CoapCollector ct = new CoapCollector(fertilize);
 		MqttCollector mc = new MqttCollector();		
 
-		boolean quit = false;
 		int item;
 		do {
 			System.out.print("\nChoose operation: \n");
@@ -121,7 +120,7 @@ public class Main {
 				} else if (ct.runAnalisis())
 					System.out.println("The analysis has started");
 				else
-					System.out.println("Ineligible operation. Process is still running");
+					System.out.println("Ineligible operation. Process is stil running");
 				break;
 			}
 
@@ -164,7 +163,7 @@ public class Main {
 
 			case 0: {
 				mc.closeConnection();
-				quit = true;
+				System.exit(1);
 				break;
 			}
 
@@ -172,7 +171,7 @@ public class Main {
 				System.out.println("Invalid choice");
 			}
 
-		} while (!quit);
+		} while(true);
 
 	}
 }
