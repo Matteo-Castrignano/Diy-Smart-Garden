@@ -107,34 +107,44 @@ public class Main {
 
 			switch (item) {
 
-			case 1: {
-				if (ct.isStatus()) {
-					ct.setStatus(false);
-					
-					if(ct.getDoFertilaze())
-						System.out.println("Fertilization necessary");
-					else
-						System.out.println("Fertilization not necessary");
-					
-					System.out.printf("Iron: %.2f, Nitrogen: %.2f", ct.getIron(), ct.getNitro());
-				} else if (ct.runAnalisis())
-					System.out.println("The analysis has started");
-				else
-					System.out.println("Ineligible operation. Process is stil running");
-				break;
-			}
+				case 1: {
+					if (ct.isStatus()) {
+						ct.setStatus(false);
 
-			case 2: {
-				
-				if(mc.controllIrragation(water))
-				System.out.println("Irrigation necessary");
-				else
-				System.out.println("Irrigation not necessary");
-				
-				System.out.printf("Humidity: %.2f, Temperature: %.2f", mc.getHum(), mc.getTemp() );
-				
-				break;
-			}
+						if(ct.getDoFertilaze()) {
+							System.out.println("Fertilization necessary");
+							System.out.printf("Iron: %.2f, Nitrogen: %.2f", ct.getIron(), ct.getNitro());
+							ct.startFertilize();
+						}
+						else {
+							System.out.println("Fertilization not necessary");
+							System.out.printf("Iron: %.2f, Nitrogen: %.2f", ct.getIron(), ct.getNitro());
+						}
+
+					} else if (ct.runAnalisis())
+						System.out.println("The analysis has started");
+					else
+						System.out.println("Ineligible operation. Process is stil running");
+					break;
+				}
+
+				case 2: {
+
+					if(mc.controllIrragation(water))
+					{
+						System.out.println("Irrigation necessary");
+						System.out.printf("Humidity: %.2f, Temperature: %.2f", mc.getHum(), mc.getTemp() );
+						mc.startIrrigation();
+					}
+
+					else
+					{
+						System.out.println("Irrigation not necessary");
+						System.out.printf("Humidity: %.2f, Temperature: %.2f", mc.getHum(), mc.getTemp() );
+					}
+
+					break;
+				}
 
 			case 3: {
 				viewLog();
